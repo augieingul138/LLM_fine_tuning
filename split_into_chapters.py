@@ -1,10 +1,12 @@
 import openai
 import re
-import os
+import os                                                                                                                                                                                                          
+from dotenv import load_dotenv, find_dotenv
 from extract_text import extract_text_from_pdf
 
+load_dotenv()
 # Initialize OpenAI API key
-key = "none"
+key = os.getenv("api_key")
 
 def find_pages_for_chapters(text_chunk):
     """
