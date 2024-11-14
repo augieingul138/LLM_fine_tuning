@@ -1,12 +1,13 @@
-import fitz  # PyMuPDF
-pdf_path = "C:/Users/augus/Documents/STKboka.pdf"
+import PyPDF2
 
 def extract_text_from_pdf(pdf_path):
-    text_content = []
-    doc = fitz.open(pdf_path)
-    for page_num in range(doc.page_count):
-        page = doc[page_num]
-        text_content.append(page.get_text("text"))
-    return text_content
-
-print(extract_text_from_pdf(pdf_path))
+    with open(pdf_path, "rb") as pdf_file:
+        reader = PyPDF2.PdfReader(pdf_file)
+        full_text = ""
+       
+        for page_num in range(len(reader.pages)):
+            page = reader.pages[page_num]
+            page_text = page.extract_text()
+            full_text += f"\n[Page {page_num + 1}]\n{page_text}"
+           
+    return full_text
